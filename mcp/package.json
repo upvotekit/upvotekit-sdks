@@ -1,0 +1,44 @@
+{
+  "name": "@upvotekit/mcp",
+  "version": "0.1.0",
+  "description": "Model Context Protocol server for UpvoteKit — scoped API-key client for AI agents",
+  "type": "module",
+  "bin": {
+    "upvotekit-mcp": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "bun run src/index.ts",
+    "smoke": "bun run scripts/smoke.ts",
+    "build": "bun build src/index.ts --target=node --packages=external --outfile dist/index.js",
+    "prepublishOnly": "bun run build"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/upvotekit/upvotekit-sdks.git",
+    "directory": "mcp"
+  },
+  "homepage": "https://upvotekit.com",
+  "bugs": "https://github.com/upvotekit/upvotekit-sdks/issues",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "upvotekit",
+    "feedback",
+    "roadmap",
+    "changelog"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.1",
+    "zod": "^4.6.5"
+  }
+}
