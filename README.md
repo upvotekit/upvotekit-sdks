@@ -17,5 +17,6 @@ For websites, use the script tag from your project's settings; no package is nee
 Report bugs and ideas in [Issues](https://github.com/upvotekit/upvotekit-sdks/issues), or on our feedback board from
 inside the app.
 
-This repository is published from the UpvoteKit codebase. Pull requests are welcome; we apply accepted changes there
-and they show up here with the next release.
+This repository is a read-only mirror, published from the UpvoteKit codebase; each commit is a sync. Pull requests
+are welcome: we apply accepted changes there and close the pull request with a link to the release that carries
+them. Releases are tagged `flutter-vX.Y.Z` and `mcp-vX.Y.Z`.
