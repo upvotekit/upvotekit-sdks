@@ -1,3 +1,9 @@
+## 0.2.0
+
+* What's new badge: `UpvoteKitChangelogBadge` wraps any widget with an unread-release count. `UpvoteKit.unreadChangelogCount()` and `UpvoteKit.unreadChangelog` expose the same count.
+* Opening the changelog (`UpvoteKitChangelogView` or `UpvoteKit.openChangelog`) marks it seen when the embed posts `changelog-viewed`. The seen date is stored on the device, scoped by base URL and project. With no seen date, only releases from the last 30 days count. Counts above 9 show as "9+".
+* Bridge event `changelog-viewed` (`latestPublishedAt`).
+
 ## 0.1.0
 
 * Initial Flutter SDK: thin webview embeds for feedback, roadmap, changelog, and submit.

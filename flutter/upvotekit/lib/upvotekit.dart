@@ -6,6 +6,7 @@
 library;
 
 export 'src/bridge.dart' show UpvoteKitEvent, UpvoteKitEventType;
+export 'src/changelog_badge.dart' show UpvoteKitChangelogBadge;
 export 'src/config.dart';
 export 'src/upvotekit.dart';
 export 'src/views.dart';

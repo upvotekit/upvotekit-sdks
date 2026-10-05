@@ -14,6 +14,7 @@ enum UpvoteKitEventType {
   authExpired,
   openExternal,
   unavailable,
+  changelogViewed,
 }
 
 /// Parsed bridge event from the embed page.
@@ -36,6 +37,13 @@ class UpvoteKitEvent {
   bool? get voted => payload['voted'] as bool?;
 
   int? get voteCount => _asInt(payload['voteCount']);
+
+  /// Newest published release the changelog page reported, or `null`.
+  String? get latestPublishedAt {
+    final value = payload['latestPublishedAt'];
+    if (value is! String || value.isEmpty) return null;
+    return value;
+  }
 
   static int? _asInt(Object? value) {
     if (value is int) return value;
@@ -130,6 +138,8 @@ class UpvoteKitBridgeParser {
         return UpvoteKitEventType.openExternal;
       case 'unavailable':
         return UpvoteKitEventType.unavailable;
+      case 'changelog-viewed':
+        return UpvoteKitEventType.changelogViewed;
       default:
         return null;
     }

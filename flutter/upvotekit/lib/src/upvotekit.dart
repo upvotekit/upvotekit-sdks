@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import 'changelog_badge.dart';
 import 'config.dart';
 import 'runtime.dart';
 import 'views.dart';
@@ -47,12 +49,24 @@ class UpvoteKit {
       secondaryColor: secondaryColor,
       backgroundColor: backgroundColor,
     );
+    clearUnreadChangelog();
   }
 
   /// Clears configuration (primarily for tests).
   static void reset() {
     UpvoteKitRuntime.reset();
+    resetChangelogBadge();
   }
+
+  /// Unread published releases. Updates when [unreadChangelogCount] finishes
+  /// and drops to 0 when the changelog embed posts `changelog-viewed`.
+  static ValueListenable<int> get unreadChangelog => unreadChangelogListenable;
+
+  /// Fetches the latest release dates and updates [unreadChangelog].
+  ///
+  /// Returns 0 when the SDK is not initialized, the board is unknown or
+  /// unavailable, the device is offline, or the seen date cannot be read.
+  static Future<int> unreadChangelogCount() => refreshUnreadChangelogCount();
 
   /// Pushes a full-screen feedback board route with an AppBar close button.
   static Future<void> openFeedback(

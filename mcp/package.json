@@ -1,6 +1,6 @@
 {
   "name": "@upvotekit/mcp",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Model Context Protocol server for UpvoteKit — scoped API-key client for AI agents",
   "type": "module",
   "bin": {

@@ -12,7 +12,7 @@ flutter pub add upvotekit
 
 ```yaml
 dependencies:
-  upvotekit: ^0.1.0
+  upvotekit: ^0.2.0
 ```
 
 ## Initialize
@@ -118,6 +118,26 @@ All views accept optional:
 - `onClose` — bridge `close` (defaults to `Navigator.maybePop`)
 - `onNavigate(path)` — in-embed path changes
 
+## What's new badge
+
+`UpvoteKitChangelogBadge` wraps a button (or any other widget) and shows how many published releases the user has not opened. It fetches once, the first time it builds. A count of 0 draws nothing. Counts above 9 show as `9+`.
+
+```dart
+UpvoteKitChangelogBadge(
+  child: IconButton(
+    tooltip: 'Changelog',
+    onPressed: () => UpvoteKit.openChangelog(context),
+    icon: const Icon(Icons.campaign_outlined),
+  ),
+)
+```
+
+`UpvoteKit.openChangelog` and `UpvoteKitChangelogView` mark those releases seen when the page posts `changelog-viewed`. The seen date stays on the device (`shared_preferences`), separate for each `baseUrl` and project. Until one is stored, only releases from the last 30 days count.
+
+`UpvoteKit.unreadChangelog` is a `ValueListenable<int>` if you draw the count yourself. `UpvoteKit.unreadChangelogCount()` fetches and updates it. Both stay at 0 — and do not throw — when the SDK is not initialized, the board is unknown or down, or the device is offline.
+
+Optional `backgroundColor` and `textColor` tint the bubble. They default to the theme's error colors.
+
 ## Theming
 
 Pass `theme`, `style`, `locale`, `board`, `accentColor`, `secondaryColor`, and `backgroundColor` to `initialize`. They become embed query params (`theme`, `style`, `locale`, `board`, `accent`, `secondary`, and `bg` as hex without `#`). `style` is omitted when null so the project's saved preset is used (`classic`, `soft`, `editorial`, `brutalist`, `glass`, `studio`, `mono-white`, `mono-black`, `terminal`, `paper`, `neon`). `secondary` is the highlight color (voted state, active tab, changelog markers). `bg` is the page background; the embed derives card, text, and border colors from it and picks light or dark rendering from its luminance. Styles with a fixed mode (`mono-white`, `mono-black`, `terminal`, `paper`, `neon`) ignore `bg`. To follow the app theme, pass the color on the view:
@@ -138,7 +158,9 @@ The embed posts JSON to the `UpvoteKitBridge` JavaScript channel:
 {"source":"upvotekit","type":"<type>","payload":{}}
 ```
 
-Messages with `source != "upvotekit"` are ignored. Types: `ready`, `resize`, `navigate`, `close`, `feedback-created`, `vote-changed`, `auth-expired`, `open-external`, `unavailable`.
+Messages with `source != "upvotekit"` are ignored. Types: `ready`, `resize`, `navigate`, `close`, `feedback-created`, `vote-changed`, `auth-expired`, `open-external`, `unavailable`, `changelog-viewed`.
+
+`changelog-viewed` carries `{ "latestPublishedAt": "<ISO>" | null }` — the newest published release, or `null` when the changelog is empty. The SDK stores that date (or the current time when it is null) and clears the what's-new badge. Your `onEvent` callback still receives the message.
 
 `unavailable` carries an empty payload. Use `onUnavailable` to hide a Feedback entry point while the board is under maintenance. `ready` and `resize` are still delivered.
 

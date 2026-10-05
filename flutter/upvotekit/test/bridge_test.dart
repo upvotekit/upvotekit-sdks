@@ -68,6 +68,26 @@ void main() {
       expect(event.payload, isEmpty);
     });
 
+    test('parses changelog-viewed', () {
+      final result = parser.parse(
+        '{"source":"upvotekit","type":"changelog-viewed","payload":{"latestPublishedAt":"2026-10-01T00:00:00.000Z"}}',
+      );
+
+      final event = (result as UpvoteKitBridgeMessage).event;
+      expect(event.type, UpvoteKitEventType.changelogViewed);
+      expect(event.latestPublishedAt, '2026-10-01T00:00:00.000Z');
+
+      final none = parser.parse(
+        '{"source":"upvotekit","type":"changelog-viewed","payload":{"latestPublishedAt":null}}',
+      );
+      expect((none as UpvoteKitBridgeMessage).event.latestPublishedAt, isNull);
+
+      final empty = parser.parse(
+        '{"source":"upvotekit","type":"changelog-viewed","payload":{"latestPublishedAt":""}}',
+      );
+      expect((empty as UpvoteKitBridgeMessage).event.latestPublishedAt, isNull);
+    });
+
     test('parses auth-expired and open-external', () {
       final auth = parser.parse(
         '{"source":"upvotekit","type":"auth-expired","payload":{}}',

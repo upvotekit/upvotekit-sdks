@@ -58,13 +58,17 @@ export const registerReleaseTools: RegisterTools = (server, api) => {
     'publish_release',
     {
       description:
-        'DESTRUCTIVE: Publish a draft release (makes it public on the changelog). Optionally mark linked feedback as Completed. Requires releases:write.',
+        'DESTRUCTIVE: Publish a draft release (makes it public on the changelog and emails people). Optionally mark linked feedback as Completed. Requires releases:write.',
       inputSchema: {
         id: z.string().describe('Release id'),
         mark_linked_completed: z
           .boolean()
           .optional()
           .describe('If true, mark linked feedback Completed when publishing'),
+        email_subscribers: z
+          .boolean()
+          .optional()
+          .describe("Also email the changelog's subscribers (default true). Followers of linked feedback are emailed either way"),
       },
       annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: true },
     },
@@ -73,6 +77,7 @@ export const registerReleaseTools: RegisterTools = (server, api) => {
         async () =>
           api.post(`/api/v1/releases/${encodeURIComponent(args.id)}/publish`, {
             mark_linked_completed: args.mark_linked_completed ?? false,
+            email_subscribers: args.email_subscribers,
           }),
         args,
       ),

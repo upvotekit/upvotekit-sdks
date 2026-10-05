@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import 'bridge.dart';
+import 'changelog_badge.dart';
 import 'config.dart';
 import 'url_builder.dart';
 
@@ -249,6 +252,9 @@ class _UpvoteKitEmbedViewState extends State<UpvoteKitEmbedView> {
         break;
       case UpvoteKitEventType.unavailable:
         widget.onUnavailable?.call();
+        break;
+      case UpvoteKitEventType.changelogViewed:
+        unawaited(acknowledgeChangelogViewed(event));
         break;
     }
   }

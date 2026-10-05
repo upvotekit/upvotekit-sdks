@@ -1,3 +1,7 @@
+## 0.2.0
+
+* `publish_release` takes `email_subscribers` to publish without emailing the changelog's subscribers.
+
 ## 0.1.0
 
 * Initial MCP server over the UpvoteKit REST API (`/api/v1`), authenticated with a scoped project API key.

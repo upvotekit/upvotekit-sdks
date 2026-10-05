@@ -161,9 +161,11 @@ class _LaunchPad extends StatelessWidget {
           child: const Text('Roadmap'),
         ),
         const SizedBox(height: 12),
-        FilledButton.tonal(
-          onPressed: onOpenChangelog,
-          child: const Text('Changelog'),
+        UpvoteKitChangelogBadge(
+          child: FilledButton.tonal(
+            onPressed: onOpenChangelog,
+            child: const Text('Changelog'),
+          ),
         ),
         const SizedBox(height: 24),
         Text(
